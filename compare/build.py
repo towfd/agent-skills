@@ -268,10 +268,13 @@ ZH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'zh')
 def _load(kind, path, name):
     z = open(os.path.join(ZH, name + '.md'), encoding='utf-8').read()
     m = re.match(r'TOPIC: (.+)\n\s*\n', z)
-    title = name.replace('principle-', '').replace('-', ' ').capitalize()
+    title = re.sub(r'^(principle|skill|doc)-', '', name).replace('-', ' ').capitalize()
     return dict(id=name, topic=m.group(1).strip(), title=title, kind=kind, path=path, zh=z[m.end():])
 _names = sorted(os.path.basename(f)[:-3] for f in glob.glob(os.path.join(ZH, '*.md')))
-FILES += [_load('劇本', f'skills/poteto-mode/playbooks/{n}.md', n) for n in _names if not n.startswith('principle-')]
+_SKILL_SRC = {'skill-deslop': '../cursor-team-kit/skills/deslop/SKILL.md'}
+FILES += [_load('劇本', f'skills/poteto-mode/playbooks/{n}.md', n) for n in _names if not n.startswith(('principle-', 'skill-', 'doc-'))]
+FILES += [_load('skill', _SKILL_SRC.get(n, f'skills/{n[6:]}/SKILL.md'), n) for n in _names if n.startswith('skill-')]
+FILES += [_load('原作者的 Claude Code 對照表', f'docs/harness/{n[4:]}.md', n) for n in _names if n.startswith('doc-')]
 FILES += [_load('原則', f'skills/{n}/SKILL.md', n) for n in _names if n.startswith('principle-')]
 
 def blocks(t): return re.split(r'\n\s*\n', t.strip('\n'))

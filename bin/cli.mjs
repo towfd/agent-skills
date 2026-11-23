@@ -92,6 +92,13 @@ async function main() {
     if (opt.link) symlinkSync(join(SRC, name), to, 'dir'); else cpSync(join(SRC, name), to, { recursive: true });
     console.log(`  ${opt.link ? '連結' : '複製'} ${name}`);
   }
+  // 對照表：skill 裡寫的是 ../../docs/harness/claude-code.md，所以放在 skills 資料夾的隔壁。
+  const docFrom = join(ROOT, 'docs', 'harness', 'claude-code.md');
+  const docTo = join(dest, '..', 'docs', 'harness', 'claude-code.md');
+  mkdirSync(dirname(docTo), { recursive: true });
+  rmSync(docTo, { force: true });
+  if (opt.link) symlinkSync(docFrom, docTo, 'file'); else cpSync(docFrom, docTo);
+  console.log(`  ${opt.link ? '連結' : '複製'} Claude Code 對照表 → ${docTo}`);
   console.log('好了。新開的對話才看得到新裝的 skill。');
 }
 
