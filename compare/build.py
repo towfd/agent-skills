@@ -261,6 +261,19 @@ Investigation（調查）、Bug fix（修 bug）、Perf issue（效能問題）�
 </EXTREMELY_IMPORTANT>'''),
 ]
 
+# 第三批起：中文對照放在 compare/zh/<名字>.md，一個檔一份（第一行「TOPIC: 主題」，空一行後是譯文）。
+# 原則的檔名是 principle-xxx.md，其餘是劇本。有檔才會出現在頁面上。
+import os, glob
+ZH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'zh')
+def _load(kind, path, name):
+    z = open(os.path.join(ZH, name + '.md'), encoding='utf-8').read()
+    m = re.match(r'TOPIC: (.+)\n\s*\n', z)
+    title = name.replace('principle-', '').replace('-', ' ').capitalize()
+    return dict(id=name, topic=m.group(1).strip(), title=title, kind=kind, path=path, zh=z[m.end():])
+_names = sorted(os.path.basename(f)[:-3] for f in glob.glob(os.path.join(ZH, '*.md')))
+FILES += [_load('劇本', f'skills/poteto-mode/playbooks/{n}.md', n) for n in _names if not n.startswith('principle-')]
+FILES += [_load('原則', f'skills/{n}/SKILL.md', n) for n in _names if n.startswith('principle-')]
+
 def blocks(t): return re.split(r'\n\s*\n', t.strip('\n'))
 
 sections=[]; toc=[]
