@@ -34,6 +34,12 @@ npx github:towfd/agent-skills add --all                # 安裝全部
 | `principle-guard-the-context-window` | 對話內容接近上限時，將大量的閱讀與輸出交由 subagent 處理，主對話僅保留摘要 | 輸入 `/principle-guard-the-context-window` |
 | `principle-laziness-protocol` | 優先考慮刪減，並以足以解決問題的最小幅度進行修改 | 輸入 `/principle-laziness-protocol` |
 | `principle-subtract-before-you-add` | 新增內容之前，先移除不再需要的部分，再於較精簡的基礎上進行開發 | 輸入 `/principle-subtract-before-you-add` |
+| `unslop` | 清除文字中的 AI 腔，適用於回覆、文件與各類對外文字 | 輸入 `/unslop` |
+| `technical-writing` | 撰寫技術文件、PR 說明與 commit 訊息的規範 | 輸入 `/technical-writing` |
+| `no-comments` | 送審前清理程式中不必要的註解 | 輸入 `/no-comments` |
+| `deslop` | 存檔前清除本次修改中帶有 AI 腔的程式碼 | 輸入 `/deslop` |
+| `show-me-your-work` | 長時間或無人看管的工作中，逐筆記錄每個決定的內容、理由、證據與結果 | 輸入 `/show-me-your-work` |
+| `figure-it-out` | 沒有合用的劇本時，為該項工作設計一份可供事後查核的做法 | 輸入 `/figure-it-out` |
 | 其餘 21 條 `principle-*` | 入口所引用的各項原則，分為核心、架構、驗證、委派、後設五類，例如 `principle-prove-it-works`、`principle-fix-root-causes`。完整清單請執行 `list` | 輸入 `/principle-<名稱>` |
 
 ## 來源與授權
@@ -44,7 +50,8 @@ pstack 原本是針對 Cursor 撰寫。原作者另外提供了 Claude Code 版�
 
 | 項目 | 原始檔案（皆位於原倉庫的 `harness/pstack/claude-code/`） | 調整內容 |
 |---|---|---|
-| `sharpen`、`in-your-own-words`、24 個 `principle-*` | `skills/<同名>/SKILL.md` | 未調整 |
+| `sharpen`、`in-your-own-words`、`unslop`、`technical-writing`、`no-comments`、`show-me-your-work`、`figure-it-out`、24 個 `principle-*` | `skills/<同名>/`（含附屬的腳本與範本） | 未調整 |
+| `deslop` | Cursor 另一個外掛 [`cursor-team-kit`](https://github.com/cursor/plugins/tree/main/cursor-team-kit) 的 `skills/deslop/SKILL.md`（Cursor，MIT 授權，條款見 [`LICENSE-cursor-team-kit`](LICENSE-cursor-team-kit)） | 未調整 |
 | `poteto-mode` | `skills/poteto-mode/` 的 `SKILL.md`、`worker.md`、`playbooks/*.md` | 未調整。僅收錄 21 份劇本，未收錄項目見下方 |
 | Claude Code 對照表 | `docs/harness/claude-code.md` | 未調整。位於本倉庫的 `docs/harness/`，安裝時會一併放到 `.claude/docs/harness/` |
 | `pause-safely` | `skills/poteto-mode/playbooks/pause-safely.md` | 原始檔案為劇本中的一頁，不含 skill 所需的檔頭。我們僅在檔案開頭補上名稱、說明與啟動方式，內文維持原樣 |
@@ -54,7 +61,7 @@ pstack 原本是針對 Cursor 撰寫。原作者另外提供了 Claude Code 版�
 
 - 對照表以 `/pstack:<name>` 稱呼各 skill，並以 `<pstack>` 指稱同時含有 `skills/` 與 `docs/` 的資料夾。原作者是以外掛的形式發佈；本倉庫是將 skill 個別安裝至 `.claude/skills/`，因此實際的指令為 `/<name>`，`<pstack>` 對應的則是專案的 `.claude/`。
 - 尚未收錄的項目如下。入口或劇本引用到這些項目時，該步驟無法照原文執行。
-  - 入口與劇本點名的其他 skill：`architect`、`swarm`、`arena`、`interrogate`、`unslop`、`technical-writing`、`no-comments`、`benchmark-checklist`、`show-me-your-work`、`figure-it-out`、`setup-pstack`，以及 agent 設定 `poteto-agent`。`deslop`、`control-ui`、`control-cli` 屬於 Cursor 的另一個外掛 `cursor-team-kit`，同樣未收錄。
+  - 入口與劇本點名的其他 skill：`architect`、`swarm`、`arena`、`interrogate`、`benchmark-checklist`、`setup-pstack`、`why`，以及 agent 設定 `poteto-agent`、`comment-sicko`。`control-ui`、`control-cli` 屬於 Cursor 的另一個外掛 `cursor-team-kit`，同樣未收錄。
   - 劇本 `worktree-cleanup`，以及劇本所用的附屬檔 `scripts/`（監看 PR 與盤點 worktree 的程式）與 `references/bugbot-triage.md`。
 
 ## 倉庫內容
