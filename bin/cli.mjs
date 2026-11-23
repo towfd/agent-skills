@@ -99,6 +99,19 @@ async function main() {
   rmSync(docTo, { force: true });
   if (opt.link) symlinkSync(docFrom, docTo, 'file'); else cpSync(docFrom, docTo);
   console.log(`  ${opt.link ? '連結' : '複製'} Claude Code 對照表 → ${docTo}`);
+  // agent 設定：入口和 no-comments 派工時會用，放到 skills 資料夾隔壁的 agents/。
+  const agentsFrom = join(ROOT, 'agents');
+  const agentsTo = join(dest, '..', 'agents');
+  mkdirSync(agentsTo, { recursive: true });
+  for (const f of readdirSync(agentsFrom).filter(f => f.endsWith('.md'))) {
+    const to = join(agentsTo, f);
+    let exists = false;
+    try { lstatSync(to); exists = true; } catch {}
+    if (exists && !opt.force) { console.log(`  跳過 agent ${f}（已經有了，要蓋掉請加 --force）`); continue; }
+    if (exists) rmSync(to, { force: true });
+    if (opt.link) symlinkSync(join(agentsFrom, f), to, 'file'); else cpSync(join(agentsFrom, f), to);
+    console.log(`  ${opt.link ? '連結' : '複製'} agent ${f}`);
+  }
   console.log('好了。新開的對話才看得到新裝的 skill。');
 }
 
