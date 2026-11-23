@@ -1,0 +1,198 @@
+<title>pstack 原文對照</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&family=Inter:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* 版面：對照讀本。每個原檔一節，節內一段一列，左原文、右中文；手機上每段先原文再中文。 */
+:root {
+  --bg: #f2f6f5;
+  --surface: #ffffff;
+  --ink: #14211f;
+  --muted: #586966;
+  --line: #d3ddda;
+  --accent: #0f6e63;
+  --accent-soft: #dcefeb;
+  --zh-bg: #f7faf9;
+  --font-display: "LXGW WenKai TC", "PingFang TC", "Microsoft JhengHei", serif;
+  --font-zh: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  --font-en: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1716;
+    --surface: #172220;
+    --ink: #e6efec;
+    --muted: #9bacaa;
+    --line: #2b3936;
+    --accent: #5fcab9;
+    --accent-soft: #17332f;
+    --zh-bg: #131d1b;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1716;
+  --surface: #172220;
+  --ink: #e6efec;
+  --muted: #9bacaa;
+  --line: #2b3936;
+  --accent: #5fcab9;
+  --accent-soft: #17332f;
+  --zh-bg: #131d1b;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-zh);
+  font-size: 16px;
+  line-height: 1.75;
+}
+.page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-block: 40px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+}
+
+.masthead { display: flex; flex-direction: column; gap: 12px; }
+.masthead h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 6vw, 2.8rem);
+  line-height: 1.2;
+  margin: 0;
+}
+.masthead p { margin: 0; max-width: 38em; color: var(--muted); }
+.source {
+  display: flex; flex-wrap: wrap; gap: 6px 20px;
+  font-size: 0.88rem; color: var(--muted);
+}
+.source code { font-family: var(--font-mono); font-size: 0.92em; color: var(--ink); overflow-wrap: anywhere; }
+
+/* 目錄 */
+.toc { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
+.toc a {
+  display: grid;
+  grid-template-columns: 9em minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+}
+.toc a:hover .t-title, .toc a:focus-visible .t-title { color: var(--accent); text-decoration: underline; }
+.toc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.t-topic { color: var(--muted); font-size: 0.9rem; }
+.t-title { font-family: var(--font-en); font-weight: 600; }
+.t-count { font-family: var(--font-mono); font-size: 0.85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.toc-note { margin: 8px 0 0; font-size: 0.85rem; color: var(--muted); }
+
+/* 譯註 */
+.gloss { display: flex; flex-direction: column; gap: 10px; }
+.gloss h2, .file-head h2 { margin: 0; }
+.gloss h2 { font-family: var(--font-display); font-size: 1.3rem; }
+.gloss dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 6px 28px;
+  font-size: 0.93rem;
+}
+.gloss dl div { display: flex; gap: 10px; min-width: 0; }
+.gloss dt { font-family: var(--font-mono); color: var(--accent); white-space: nowrap; }
+.gloss dd { margin: 0; color: var(--muted); }
+
+/* 每個原檔 */
+.file {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  scroll-margin-top: 16px;
+}
+.file-head { padding: 20px 22px 16px; display: flex; flex-direction: column; gap: 6px; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 0.82rem; }
+.topic { background: var(--accent-soft); color: var(--ink); padding: 2px 10px; border-radius: 999px; font-weight: 500; }
+.kind, .count { color: var(--muted); }
+.count { font-family: var(--font-mono); font-size: 0.8rem; }
+.file-head h2 { font-family: var(--font-en); font-weight: 600; font-size: 1.5rem; line-height: 1.3; }
+.path { margin: 0; font-family: var(--font-mono); font-size: 0.82rem; color: var(--muted); overflow-wrap: anywhere; }
+
+.cols, .row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.cols {
+  border-top: 1px solid var(--line);
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; color: var(--muted);
+}
+.cols span { padding: 8px 22px; }
+.cols span + span { background: var(--zh-bg); border-left: 1px solid var(--line); }
+.row { border-top: 1px solid var(--line); }
+.cell {
+  padding: 14px 22px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.cell.en { font-family: var(--font-en); font-size: 0.95rem; line-height: 1.7; }
+.cell.zh { background: var(--zh-bg); border-left: 1px solid var(--line); font-size: 0.98rem; }
+
+.foot { color: var(--muted); font-size: 0.88rem; border-top: 1px solid var(--line); padding-top: 16px; display: flex; flex-direction: column; gap: 6px; }
+.foot p { margin: 0; max-width: 46em; }
+
+@media (max-width: 760px) {
+  .cols { display: none; }
+  .row { grid-template-columns: minmax(0, 1fr); }
+  .cell { padding: 12px 16px; }
+  .cell.zh { border-left: 0; border-top: 1px dashed var(--line); }
+  .file-head { padding: 18px 16px 14px; }
+  .toc a { grid-template-columns: minmax(0, 1fr) auto; }
+  .t-topic { grid-column: 1 / -1; }
+}
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <h1>pstack 原文對照</h1>
+    <p>左邊是原檔的原文，由程式直接從檔案帶進來，一個字都沒改。右邊是照原文逐段翻的中文，沒有加我的意見。目前十一個檔：前八個是第一批，後三個是給 agent 看的入口、工人守則和開場提示。</p>
+    <div class="source">
+      <span>來源 <code>github.com/cursor/plugins</code> 的 <code>pstack/</code></span>
+      <span>版本 <code>7a58391</code>（2026-11-21）</span>
+      <span>開場提示來自移植版 <code>github.com/michael-denyer/pstack-claude</code>，版本 <code>81603a4</code></span>
+      <span>MIT License，Copyright (c) 2026 Lauren Tan</span>
+    </div>
+  </header>
+
+  <nav aria-label="目錄">
+    <ol class="toc"><!--TOC--></ol>
+    <p class="toc-note">最右邊的數字是原文的英文字數。</p>
+  </nav>
+
+  <section class="gloss">
+    <h2>幾個沒翻的詞</h2>
+    <dl>
+      <div><dt>agent</dt><dd>做事的 AI 對話</dd></div>
+      <div><dt>subagent</dt><dd>被主對話派出去做一小段事的小助手</dd></div>
+      <div><dt>skill</dt><dd>一份寫給 agent 的做事說明</dd></div>
+      <div><dt>commit</dt><dd>存進版本紀錄的一筆存檔</dd></div>
+      <div><dt>wip:</dt><dd>「還沒做完」的存檔標記</dd></div>
+      <div><dt>PR</dt><dd>一包送審的程式修改</dd></div>
+      <div><dt>diff</dt><dd>修改前後的差異</dd></div>
+      <div><dt>log</dt><dd>程式跑的時候留下的紀錄</dd></div>
+    </dl>
+  </section>
+
+  <!--SECTIONS-->
+
+  <footer class="foot">
+    <p>第八個是指南第 2 章的其中一節，不是整章。入口那份放的是原版；Claude Code 移植版的同一份有 64 行不同，多半是把 Cursor 專有的工具名稱和模型名稱換掉。</p>
+    <p>原文裡的 <code>**</code>、<code>`</code>、<code>---</code> 是 Markdown 的格式記號，照原樣留著。</p>
+  </footer>
+
+</div>
