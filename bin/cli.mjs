@@ -92,13 +92,15 @@ async function main() {
     if (opt.link) symlinkSync(join(SRC, name), to, 'dir'); else cpSync(join(SRC, name), to, { recursive: true });
     console.log(`  ${opt.link ? '連結' : '複製'} ${name}`);
   }
-  // 對照表：skill 裡寫的是 ../../docs/harness/claude-code.md，所以放在 skills 資料夾的隔壁。
-  const docFrom = join(ROOT, 'docs', 'harness', 'claude-code.md');
-  const docTo = join(dest, '..', 'docs', 'harness', 'claude-code.md');
-  mkdirSync(dirname(docTo), { recursive: true });
-  rmSync(docTo, { force: true });
-  if (opt.link) symlinkSync(docFrom, docTo, 'file'); else cpSync(docFrom, docTo);
-  console.log(`  ${opt.link ? '連結' : '複製'} Claude Code 對照表 → ${docTo}`);
+  // 對照表和指南：skill 裡寫的是 ../../docs/...，所以放在 skills 資料夾的隔壁。只動這兩個子資料夾，不碰 docs/ 裡別的東西。
+  for (const sub of ['harness', 'guide']) {
+    const from = join(ROOT, 'docs', sub);
+    const to = join(dest, '..', 'docs', sub);
+    mkdirSync(dirname(to), { recursive: true });
+    rmSync(to, { recursive: true, force: true });
+    if (opt.link) symlinkSync(from, to, 'dir'); else cpSync(from, to, { recursive: true });
+    console.log(`  ${opt.link ? '連結' : '複製'} docs/${sub}`);
+  }
   // agent 設定：入口和 no-comments 派工時會用，放到 skills 資料夾隔壁的 agents/。
   const agentsFrom = join(ROOT, 'agents');
   const agentsTo = join(dest, '..', 'agents');
